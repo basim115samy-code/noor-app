@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>نور - المساعد الإسلامي</title>
+<meta name="theme-color" content="#0c1018"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<link rel="manifest" href="/manifest.json"/>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#0c1018;color:#c8b98a;font-family:'Amiri',serif;overflow:hidden}
+#app{display:flex;flex-direction:column;height:100dvh;max-width:700px;margin:0 auto}
+#header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:rgba(10,14,20,.97);border-bottom:1px solid rgba(212,168,67,.2);flex-shrink:0}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,#d4a843,#7a5a10);display:flex;align-items:center;justify-content:center;font-size:18px}
+.logo-text{font-size:1.2rem;font-weight:700;color:#d4a843}
+.logo-sub{font-size:.6rem;color:#5a4f30}
+#langBtn{background:rgba(212,168,67,.15);border:1px solid rgba(212,168,67,.2);color:#d4a843;padding:5px 13px;border-radius:14px;cursor:pointer;font-size:.75rem;font-family:inherit}
+#cats{display:flex;gap:6px;padding:8px 14px;overflow-x:auto;background:rgba(10,14,20,.7);border-bottom:1px solid rgba(212,168,67,.06);flex-shrink:0;scrollbar-width:none}
+.cat-btn{padding:5px 12px;border-radius:14px;white-space:nowrap;border:1px solid rgba(212,168,67,.2);background:transparent;color:#5a4f30;font-size:.72rem;cursor:pointer;font-family:inherit}
+.cat-btn.active{border-color:#d4a843;background:rgba(212,168,67,.15);color:#d4a843}
+#messages{flex:1;overflow-y:auto;padding:16px 14px}
+#welcome{text-align:center;padding:30px 10px}
+.w-icon{font-size:2.8rem;margin-bottom:12px}
+.w-title{font-size:1.5rem;color:#d4a843;font-weight:700;margin-bottom:6px}
+.w-sub{font-size:.85rem;color:#5a4f30;margin-bottom:24px}
+#sugs{display:flex;flex-wrap:wrap;gap:7px;justify-content:center}
+.sug{padding:8px 14px;background:rgba(212,168,67,.05);border:1px solid rgba(212,168,67,.2);border-radius:10px;color:#7a6530;cursor:pointer;font-size:.8rem;font-family:inherit}
+.msg-wrap{margin-bottom:14px;display:flex;flex-direction:column}
+.msg-wrap.user{align-items:flex-start}
+.msg-wrap.ai{align-items:flex-end}
+.lbl{display:flex;align-items:center;gap:5px;margin-bottom:4px;font-size:.65rem;color:#3d3420}
+.lbl-icon{width:20px;height:20px;background:linear-gradient(135deg,#d4a843,#7a5a10);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px}
+.bubble{max-width:88%;padding:11px 14px;font-size:.87rem;line-height:1.75;border-radius:14px}
+.bubble.user{background:rgba(212,168,67,.15);border:1px solid rgba(212,168,67,.2);color:#e8d5a3;border-radius:14px 14px 14px 3px}
+.bubble.ai{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05);color:#b8a878;border-radius:14px 3px 14px 14px}
+.bubble h2{color:#d4a843;font-size:.95rem;margin:10px 0 4px}
+.bubble strong{color:#e8d5a3}
+.pt{display:flex;gap:7px;margin:2px 0}
+.bl{color:#d4a843;flex-shrink:0}
+#loading{display:none;align-items:center;gap:8px;padding:6px 0}
+#loading.show{display:flex}
+.dot{width:6px;height:6px;border-radius:50%;background:#d4a843;opacity:.5;animation:dot 1.2s ease-in-out infinite}
+.dot:nth-child(2){animation-delay:.2s}.dot:nth-child(3){animation-delay:.4s}
+.ld-icon{width:20px;height:20px;background:linear-gradient(135deg,#d4a843,#7a5a10);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px}
+#disc{text-align:center;padding:4px 10px;font-size:.62rem;color:#2e2818;background:rgba(212,168,67,.025);border-top:1px solid rgba(212,168,67,.05);flex-shrink:0}
+#input-area{padding:10px 14px;background:rgba(10,14,20,.97);border-top:1px solid rgba(212,168,67,.1);flex-shrink:0}
+#acat{font-size:.68rem;color:#5a4020;margin-bottom:5px;min-height:14px}
+#irow{display:flex;gap:8px;align-items:flex-end}
+#inp{flex:1;background:rgba(255,255,255,.03);border:1px solid rgba(212,168,67,.2);border-radius:12px;padding:10px 13px;color:#c8b98a;font-size:.86rem;font-family:inherit;outline:none;resize:none;max-height:100px;line-height:1.5;direction:rtl}
+#inp:focus{border-color:rgba(212,168,67,.45)}
+#inp::placeholder{color:#2e2818}
+#sb{width:40px;height:40px;border-radius:10px;border:none;font-size:15px;background:linear-gradient(135deg,#d4a843,#7a5a10);color:#fff;cursor:pointer;flex-shrink:0}
+#sb:disabled{background:rgba(212,168,67,.08);color:#3d3420;cursor:not-allowed}
+@keyframes dot{0%,100%{transform:scale(.6);opacity:.3}50%{transform:scale(1);opacity:1}}
+</style>
+</head>
+<body>
+<div id="app">
+<div id="header">
+<div class="logo">
+<div class="logo-icon">🕌</div>
+<div><div class="logo-text" id="an">نور</div><div class="logo-sub" id="as">مساعدك الإسلامي الذكي</div></div>
+</div>
+<button id="langBtn" onclick="tl()">EN</button>
+</div>
+<div id="cats"></div>
+<div id="messages">
+<div id="welcome">
+<div class="w-icon">☪️</div>
+<div class="w-title" id="wt">بسم الله الرحمن الرحيم</div>
+<div class="w-sub" id="ws">كيف يمكنني مساعدتك اليوم؟</div>
+<div id="sugs"></div>
+</div>
+<div id="loading"><div class="ld-icon">🕌</div><div class="dot"></div><div class="dot"></div><div class="dot"></div><span style="font-size:.72rem;color:#3d3420" id="tt">جاري التفكير...</span></div>
+</div>
+<div id="disc">⚠️ للتوجيه العام فقط — استشر عالماً في الأمور المهمة</div>
+<div id="input-area">
+<div id="acat"></div>
+<div id="irow">
+<textarea id="inp" rows="1" placeholder="اسألني أي سؤال إسلامي..." oninput="ar(this)" onkeydown="hk(event)"></textarea>
+<button id="sb" onclick="sm()" disabled>➤</button>
+</div>
+</div>
+</div>
+<script>
+const T={ar:{n:"نور",s:"مساعدك الإسلامي الذكي",wt:"بسم الله الرحمن الرحيم",ws:"كيف يمكنني مساعدتك اليوم؟",th:"جاري التفكير...",disc:"⚠️ للتوجيه العام فقط — استشر عالماً في الأمور المهمة",ph:"اسألني أي سؤال إسلامي...",lb:"EN",dir:"rtl",cats:["🕌 أسئلة إسلامية","📖 تفسير آيات","⚖️ أحكام فقهية","🤲 أدعية وأذكار"],pre:["أجب على سؤالي: ","فسّر لي: ","ما الحكم في: ","أعطني دعاء عن: "],sugs:["ما حكم صلاة الجمعة؟","فسّر لي آية الكرسي","ما دعاء الصباح؟","ما هي أركان الإسلام الخمسة؟"]},en:{n:"Noor",s:"Your Islamic AI Assistant",wt:"Bismillah Al-Rahman Al-Raheem",ws:"How can I help you today?",th:"Thinking...",disc:"⚠️ For general guidance only — consult a scholar for important matters",ph:"Ask any Islamic question...",lb:"عر",dir:"ltr",cats:["🕌 Islamic Q&A","📖 Quran Tafsir","⚖️ Fiqh Rulings","🤲 Duas & Dhikr"],pre:["Answer my question: ","Explain this verse: ","What is the ruling on: ","Give me a dua about: "],sugs:["Ruling on Friday prayer?","Explain Ayat Al-Kursi","What is the morning dua?","What are the 5 pillars of Islam?"]}};
+let lg="ar",ac=null,msgs=[],ld=false;
+function tl(){lg=lg==="ar"?"en":"ar";al();}
+function al(){const t=T[lg];document.documentElement.dir=t.dir;document.getElementById("an").textContent=t.n;document.getElementById("as").textContent=t.s;document.getElementById("wt").textContent=t.wt;document.getElementById("ws").textContent=t.ws;document.getElementById("tt").textContent=t.th;document.getElementById("disc").textContent=t.disc;document.getElementById("langBtn").textContent=t.lb;document.getElementById("inp").placeholder=t.ph;document.getElementById("inp").dir=t.dir;rc();rs();uac();}
+function rc(){const t=T[lg];document.getElementById("cats").innerHTML=t.cats.map((c,i)=>`<button class="cat-btn${ac===i?" active":""}" onclick="sc(${i})">${c}</button>`).join("");}
+function rs(){document.getElementById("sugs").innerHTML=T[lg].sugs.map(s=>`<button class="sug" onclick="qs('${s.replace(/'/g,"\\'")}')"> ${s}</button>`).join("");}
+function sc(i){ac=ac===i?null:i;rc();uac();}
+function uac(){document.getElementById("acat").textContent=ac!==null?T[lg].cats[ac]:"";}
+function ar(el){el.style.height="auto";el.style.height=Math.min(el.scrollHeight,100)+"px";document.getElementById("sb").disabled=!el.value.trim();}
+function hk(e){if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sm();}}
+function qs(t){sm(t);}
+function am(role,content){msgs.push({role,content});const w=document.createElement("div");w.className=`msg-wrap ${role}`;if(role==="ai"){w.innerHTML=`<div class="lbl"><div class="lbl-icon">🕌</div><span>نور · Noor</span></div><div class="bubble ai">${fmt(content)}</div>`;}else{w.innerHTML=`<div class="bubble user">${content}</div>`;}const l=document.getElementById("loading");document.getElementById("messages").insertBefore(w,l);document.getElementById("messages").scrollTop=99999;}
+function fmt(t){return t.split("\n").map(l=>{if(l.startsWith("## "))return`<h2>${l.slice(3)}</h2>`;if(l.startsWith("- ")||l.startsWith("• "))return`<div class="pt"><span class="bl">•</span><span>${fi(l.slice(2))}</span></div>`;if(l.trim()==="")return"<br>";return`<div>${fi(l)}</div>`;}).join("");}
+function fi(t){return t.replace(/\*\*(.*?)\*\*/g,"<strong>$1</strong>");}
+async function sm(text){const inp=document.getElementById("inp");const raw=text||inp.value.trim();if(!raw||ld)return;let ut=raw;if(ac!==null&&!text)ut=T[lg].pre[ac]+raw;inp.value="";inp.style.height="auto";document.getElementById("sb").disabled=true;document.getElementById("welcome").style.display="none";ld=true;am("user",ut);document.getElementById("loading").classList.add("show");document.getElementById("messages").scrollTop=99999;try{const r=await fetch("/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:msgs.map(m=>({role:m.role==="ai"?"assistant":"user",content:m.content}))})});const d=await r.json();document.getElementById("loading").classList.remove("show");am("ai",d.reply||"عذراً، حدث خطأ.");}catch{document.getElementById("loading").classList.remove("show");am("ai","عذراً، حدث خطأ في الاتصال.");}ld=false;}
+al();
+if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));
+</script>
+</body>
+                                                      </html>
